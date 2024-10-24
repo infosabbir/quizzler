@@ -38,6 +38,8 @@ class _QuizPageState extends State<QuizPage> {
     'Approximately one quarter of human bones are in the feet.',
     'A slug\'s blood is green.',
   ];
+
+  List<bool> answers = [false, true, true];
   int questionNumber = 0;
 
   @override
@@ -63,6 +65,12 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(12.0),
             child: TextButton(
               onPressed: () {
+                bool correctAnswer = answers[questionNumber];
+                if (correctAnswer == true) {
+                  debugPrint('User got Right!');
+                } else {
+                  debugPrint('User got Wrong Answer');
+                }
                 setState(() {
                   questionNumber++;
                 });
@@ -81,6 +89,12 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(12.0),
             child: TextButton(
               onPressed: () {
+                bool correctAnswer = answers[questionNumber];
+                if (correctAnswer == false) {
+                  debugPrint('User got Correct Answer');
+                } else {
+                  debugPrint('User got Wrong answer!');
+                }
                 setState(() {
                   questionNumber++;
                 });
@@ -90,7 +104,7 @@ class _QuizPageState extends State<QuizPage> {
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
               ),
-              child: Text('True'),
+              child: Text('False'),
             ),
           ),
         ),
