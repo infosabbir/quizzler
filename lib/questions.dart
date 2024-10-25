@@ -1,9 +1,9 @@
-class Questions {
+class Question {
   String questionText;
   bool questionAnswer;
 
-  Questions({
-    required this.questionText,
-    required this.questionAnswer,
-  });
+  Question(
+    this.questionText,
+    this.questionAnswer,
+  );
 }
