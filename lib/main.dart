@@ -36,14 +36,6 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKepper = [];
 
-  List<String> questions = [
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    'A slug\'s blood is green.',
-  ];
-
-  int questionNumber = 0;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -53,8 +45,8 @@ class _QuizPageState extends State<QuizPage> {
           flex: 5,
           child: Center(
             child: Text(
-              quizBrain.question[questionNumber].questionText,
-              style: TextStyle(
+              quizBrain.questionText,
+              style: const TextStyle(
                 fontSize: 25,
                 color: Colors.white,
               ),
@@ -67,23 +59,21 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(12.0),
             child: TextButton(
               onPressed: () {
-                bool correctAnswer =
-                    quizBrain.question[questionNumber].questionAnswer;
+                bool correctAnswer = quizBrain.answerText;
                 if (correctAnswer == true) {
-                  debugPrint('User got Right!');
+                  debugPrint('User got Right Answer!');
                 } else {
-                  debugPrint('User got Wrong Answer');
+                  debugPrint('User got Wrong Answer!');
                 }
                 setState(() {
-                  questionNumber++;
+                  quizBrain.nextQuestion();
                 });
-                debugPrint('$questionNumber');
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.green,
                 foregroundColor: Colors.white,
               ),
-              child: Text('True'),
+              child: const Text('True'),
             ),
           ),
         ),
@@ -92,23 +82,21 @@ class _QuizPageState extends State<QuizPage> {
             padding: const EdgeInsets.all(12.0),
             child: TextButton(
               onPressed: () {
-                bool correctAnswer =
-                    quizBrain.question[questionNumber].questionAnswer;
+                bool correctAnswer = quizBrain.answerText;
                 if (correctAnswer == false) {
-                  debugPrint('User got Correct Answer');
+                  debugPrint('User got Right Answer!');
                 } else {
                   debugPrint('User got Wrong answer!');
                 }
                 setState(() {
-                  questionNumber++;
+                  quizBrain.nextQuestion();
                 });
-                debugPrint('$questionNumber');
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
               ),
-              child: Text('False'),
+              child: const Text('False'),
             ),
           ),
         ),
