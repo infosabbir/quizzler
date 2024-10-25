@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: Colors.grey.shade900,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: QuizPage(),
           ),
         ),
@@ -36,13 +36,35 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKepper = [];
 
+  void checkAnswer(bool userAnswer) {
+    bool correctAnswer = quizBrain.answerText;
+    if (correctAnswer == userAnswer) {
+      scoreKepper.add(
+        Icon(
+          Icons.check,
+          color: Colors.green,
+        ),
+      );
+    } else {
+      scoreKepper.add(
+        Icon(
+          Icons.close,
+          color: Colors.red,
+        ),
+      );
+    }
+    setState(() {
+      quizBrain.nextQuestion();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
-          flex: 5,
+          flex: 6,
           child: Center(
             child: Text(
               quizBrain.questionText,
@@ -55,19 +77,12 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         Expanded(
+          flex: 1,
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextButton(
               onPressed: () {
-                bool correctAnswer = quizBrain.answerText;
-                if (correctAnswer == true) {
-                  debugPrint('User got Right Answer!');
-                } else {
-                  debugPrint('User got Wrong Answer!');
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAnswer(true);
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.green,
@@ -78,19 +93,12 @@ class _QuizPageState extends State<QuizPage> {
           ),
         ),
         Expanded(
+          flex: 1,
           child: Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(8.0),
             child: TextButton(
               onPressed: () {
-                bool correctAnswer = quizBrain.answerText;
-                if (correctAnswer == false) {
-                  debugPrint('User got Right Answer!');
-                } else {
-                  debugPrint('User got Wrong answer!');
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAnswer(false);
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.red,
@@ -100,8 +108,11 @@ class _QuizPageState extends State<QuizPage> {
             ),
           ),
         ),
-        Row(
-          children: scoreKepper,
+        Expanded(
+          flex: 1,
+          child: Row(
+            children: scoreKepper,
+          ),
         )
       ],
     );
